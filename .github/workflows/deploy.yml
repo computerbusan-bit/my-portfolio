@@ -1,4 +1,4 @@
-name: Deploy React App to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -25,13 +25,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Install dependencies
+
+      - name: Install dependencies (my-react-app)
         run: npm install
         working-directory: my-react-app
 
-      - name: Build
+      - name: Build (my-react-app)
         run: npm run build
         working-directory: my-react-app
+
+      - name: Install dependencies (my-portfolio)
+        run: npm install
+        working-directory: my-portfolio
+
+      - name: Build (my-portfolio)
+        run: npm run build
+        working-directory: my-portfolio
+
+      - name: Combine dist folders
+        run: |
+          mkdir -p my-react-app/dist/my-portfolio
+          cp -r my-portfolio/dist/* my-react-app/dist/my-portfolio/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

@@ -1,0 +1,47 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+/* Feastie Color Palette CSS Variables */
+:root {
+  --bg-primary: #FFF8F0;
+  --bg-pink: #FF69B4;
+  --bg-blue: #5BB8E8;
+  --bg-red: #E53620;
+  --text-primary: #4A1A8A;
+  --text-dark: #1A1A1A;
+  --text-inverse: #FFFFFF;
+  --text-sub: #6B5B7B;
+  --accent-lime: #C8E655;
+  --accent-yellow: #FFB830;
+  --accent-pink: #F0A0D0;
+  --accent-marker: #FF69B4;
+  --border-primary: #4A1A8A;
+  --border-light: #E0D8E8;
+  --btn-primary-bg: #FF69B4;
+  --btn-primary-text: #4A1A8A;
+  --btn-hover-bg: #FF4DA6;
+  --link-color: #4A1A8A;
+  --link-hover: #E53620;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-dark);
+  font-family: 'Pretendard Variable', 'Pretendard', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+}

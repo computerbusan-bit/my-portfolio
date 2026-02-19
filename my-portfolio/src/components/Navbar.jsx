@@ -1,4 +1,3 @@
-import { Link, useLocation } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -6,14 +5,21 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
-function Navbar() {
-  const location = useLocation();
+const navItems = [
+  { label: 'Home', id: 'hero' },
+  { label: 'About Me', id: 'about' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Contact', id: 'contact' },
+];
 
-  const navItems = [
-    { label: 'Home', path: '/' },
-    { label: 'About Me', path: '/about' },
-    { label: 'Projects', path: '/projects' },
-  ];
+function Navbar() {
+  const handleScroll = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <AppBar
@@ -29,12 +35,11 @@ function Navbar() {
         <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Typography
             variant="h5"
-            component={Link}
-            to="/"
+            onClick={() => handleScroll('hero')}
             sx={{
               fontWeight: 800,
               color: 'primary.main',
-              textDecoration: 'none',
+              cursor: 'pointer',
               letterSpacing: '-0.02em',
             }}
           >
@@ -43,11 +48,10 @@ function Navbar() {
           <Box sx={{ display: 'flex', gap: 1 }}>
             {navItems.map((item) => (
               <Button
-                key={item.path}
-                component={Link}
-                to={item.path}
+                key={item.id}
+                onClick={() => handleScroll(item.id)}
                 sx={{
-                  color: location.pathname === item.path ? 'secondary.main' : 'primary.main',
+                  color: 'primary.main',
                   fontWeight: 600,
                   '&:hover': { color: 'error.main' },
                 }}

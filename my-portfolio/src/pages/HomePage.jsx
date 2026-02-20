@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
-import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import CodeIcon from '@mui/icons-material/Code';
 import BrushIcon from '@mui/icons-material/Brush';
@@ -14,6 +13,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import WebIcon from '@mui/icons-material/Web';
 import LaunchIcon from '@mui/icons-material/Launch';
 import SectionTitle from '../components/SectionTitle';
+import ContactSection from '../components/ContactSection';
 
 const skills = [
   { icon: <CodeIcon />, title: 'Frontend', items: ['React', 'JavaScript', 'TypeScript', 'HTML/CSS'] },
@@ -296,51 +296,7 @@ function HomePage() {
       </Box>
 
       {/* 5. Contact Section */}
-      <Box id="contact" sx={{ py: { xs: 6, md: 10 }, bgcolor: 'secondary.main' }}>
-        <Container maxWidth="sm">
-          <Box sx={{ textAlign: 'center', mb: 6 }}>
-            <Typography variant="h3" component="h2" sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}>
-              Contact
-            </Typography>
-            <Typography variant="body1" sx={{ color: 'common.white' }}>
-              언제든 연락 주세요
-            </Typography>
-          </Box>
-          <Card sx={{ textAlign: 'center', p: { xs: 3, md: 5 } }}>
-            <CardContent>
-              <Typography variant="body1" sx={{ mb: 4, lineHeight: 1.8 }}>
-                프로젝트 협업이나 문의사항이 있으시면
-                아래 채널로 편하게 연락해 주세요.
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<EmailIcon />}
-                  href="mailto:hello@example.com"
-                  sx={{ px: 3 }}
-                >
-                  Email
-                </Button>
-                <Button
-                  variant="outlined"
-                  startIcon={<GitHubIcon />}
-                  href="https://github.com"
-                  target="_blank"
-                  sx={{
-                    px: 3,
-                    borderColor: 'primary.main',
-                    color: 'primary.main',
-                    '&:hover': { bgcolor: 'rgba(74, 26, 138, 0.05)' },
-                  }}
-                >
-                  GitHub
-                </Button>
-              </Box>
-            </CardContent>
-          </Card>
-        </Container>
-      </Box>
+      <ContactSection />
     </>
   );
 }

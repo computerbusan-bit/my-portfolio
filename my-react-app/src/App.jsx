@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Container, Typography, Divider } from '@mui/material';
+import CardSection from './components/CardSection';
+import DragDropSection from './components/DragDropSection';
+import ContactSection from './components/ContactSection';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Container maxWidth="lg" sx={{ py: 6 }}>
+      <Typography variant="h1" align="center" gutterBottom>
+        AI 서비스
+      </Typography>
+      <Typography
+        variant="body1"
+        align="center"
+        color="text.secondary"
+        sx={{ mb: 5 }}
+      >
+        다양한 AI 기술을 활용한 서비스를 살펴보세요.
+      </Typography>
 
-export default App
+      <CardSection />
+
+      <Divider sx={{ my: 6 }} />
+
+      <DragDropSection />
+
+      <Divider sx={{ my: 6 }} />
+
+      <ContactSection />
+    </Container>
+  );
+};
+
+export default App;

@@ -32,7 +32,11 @@ export default function LoginPage() {
     })
 
     if (err) {
-      setError('이메일 또는 비밀번호가 올바르지 않습니다.')
+      if (err.message === 'Email not confirmed') {
+        setError('이메일 인증이 완료되지 않았습니다. 가입 시 받은 인증 메일을 확인해주세요.')
+      } else {
+        setError('이메일 또는 비밀번호가 올바르지 않습니다.')
+      }
       setLoading(false)
       return
     }

@@ -38,6 +38,9 @@ export default function RegisterPage() {
     const { error: err } = await supabase.auth.signUp({
       email: form.email.trim(),
       password: form.password,
+      options: {
+        emailRedirectTo: 'https://computerbusan-bit.github.io/my-first-website/my-community/',
+      },
     })
 
     if (err) {

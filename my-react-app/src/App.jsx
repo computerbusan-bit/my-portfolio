@@ -2,6 +2,7 @@ import { Container, Typography, Divider } from '@mui/material';
 import CardSection from './components/CardSection';
 import DragDropSection from './components/DragDropSection';
 import ContactSection from './components/ContactSection';
+import ProjectsSection from './components/ProjectsSection';
 
 const App = () => {
   return (
@@ -23,6 +24,10 @@ const App = () => {
       <Divider sx={{ my: 6 }} />
 
       <DragDropSection />
+
+      <Divider sx={{ my: 6 }} />
+
+      <ProjectsSection />
 
       <Divider sx={{ my: 6 }} />
 

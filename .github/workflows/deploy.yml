@@ -50,12 +50,23 @@ jobs:
         run: npm run build
         working-directory: mini_sns
 
+      - name: Install dependencies (my-community)
+        run: npm install
+        working-directory: my-community
+
+      - name: Build (my-community)
+        run: npm run build
+        working-directory: my-community
+
       - name: Combine dist folders
         run: |
           mkdir -p my-react-app/dist/my-portfolio
           cp -r my-portfolio/dist/* my-react-app/dist/my-portfolio/
           mkdir -p my-react-app/dist/mini_sns
           cp -r mini_sns/dist/* my-react-app/dist/mini_sns/
+          mkdir -p my-react-app/dist/my-community
+          cp -r my-community/dist/* my-react-app/dist/my-community/
+          cp my-react-app/dist/my-community/index.html my-react-app/dist/my-community/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

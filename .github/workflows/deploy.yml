@@ -34,14 +34,6 @@ jobs:
         run: npm run build
         working-directory: my-react-app
 
-      - name: Install dependencies (my-portfolio)
-        run: npm install
-        working-directory: my-portfolio
-
-      - name: Build (my-portfolio)
-        run: npm run build
-        working-directory: my-portfolio
-
       - name: Install dependencies (mini_sns)
         run: npm install
         working-directory: mini_sns
@@ -60,13 +52,14 @@ jobs:
 
       - name: Combine dist folders
         run: |
-          mkdir -p my-react-app/dist/my-portfolio
-          cp -r my-portfolio/dist/* my-react-app/dist/my-portfolio/
-          mkdir -p my-react-app/dist/mini_sns
-          cp -r mini_sns/dist/* my-react-app/dist/mini_sns/
-          mkdir -p my-react-app/dist/my-community
-          cp -r my-community/dist/* my-react-app/dist/my-community/
-          cp my-react-app/dist/my-community/index.html my-react-app/dist/my-community/404.html
+          mkdir -p dist/my-portfolio
+          cp -r my-react-app/dist/* dist/my-portfolio/
+          mkdir -p dist/mini_sns
+          cp -r mini_sns/dist/* dist/mini_sns/
+          mkdir -p dist/my-community
+          cp -r my-community/dist/* dist/my-community/
+          cp dist/my-community/index.html dist/my-community/404.html
+          node -e "require('fs').writeFileSync('dist/index.html', '<html><head><meta http-equiv=\"refresh\" content=\"0; url=/my-first-website/my-portfolio/\"></head><body><p><a href=\"/my-first-website/my-portfolio/\">Portfolio</a></p></body></html>')"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -74,7 +67,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: my-react-app/dist
+          path: dist
 
   deploy:
     environment:

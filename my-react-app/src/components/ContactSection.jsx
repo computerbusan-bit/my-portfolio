@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import {
   Box,
+  Container,
   Typography,
   Card,
   CardContent,
@@ -22,12 +23,11 @@ import {
 } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import InstagramIcon from '@mui/icons-material/Instagram';
 import SendIcon from '@mui/icons-material/Send';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { supabase } from '../utils/supabase';
+import useIntersection from '../hooks/useIntersection';
 
 const EMOJI_OPTIONS = ['👋', '🔥', '✨', '💡', '🎉', '💬', '🙌', '❤️'];
 
@@ -43,29 +43,15 @@ const SNS_LINKS = [
     icon: <EmailIcon />,
     label: '이메일',
     keyword: '빠른 회신',
-    href: 'mailto:your@email.com',
+    href: 'mailto:computer.busan@gmail.com',
     color: '#EA4335',
   },
   {
     icon: <GitHubIcon />,
     label: 'GitHub',
     keyword: '코드 구경',
-    href: 'https://github.com/',
+    href: 'https://github.com/computerbusan-bit/my-first-website',
     color: '#181717',
-  },
-  {
-    icon: <LinkedInIcon />,
-    label: 'LinkedIn',
-    keyword: '커리어 연결',
-    href: 'https://linkedin.com/',
-    color: '#0A66C2',
-  },
-  {
-    icon: <InstagramIcon />,
-    label: 'Instagram',
-    keyword: '일상 공유',
-    href: 'https://instagram.com/',
-    color: '#E4405F',
   },
 ];
 
@@ -88,6 +74,7 @@ const ContactSection = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [headerRef, headerVisible] = useIntersection();
 
   const fetchEntries = async () => {
     setLoading(true);
@@ -156,18 +143,36 @@ const ContactSection = () => {
   };
 
   return (
-    <Box id="contact">
-      <Typography variant="h2" align="center" gutterBottom>
-        Contact
-      </Typography>
-      <Typography
-        variant="body1"
-        align="center"
-        color="text.secondary"
-        sx={{ mb: 5 }}
+    <Box
+      id="contact"
+      component="section"
+      sx={{ py: { xs: 10, md: 14 }, bgcolor: 'background.default' }}
+    >
+      <Container maxWidth="lg">
+      <Box
+        ref={headerRef}
+        sx={{
+          opacity: headerVisible ? 1 : 0,
+          transform: headerVisible ? 'translateY(0)' : 'translateY(24px)',
+          transition: 'opacity 0.6s ease, transform 0.6s ease',
+          mb: 6,
+        }}
       >
-        언제든지 연락주세요. 반갑게 답변드리겠습니다 😊
-      </Typography>
+        <Typography
+          variant="body2"
+          color="primary"
+          fontWeight={600}
+          sx={{ letterSpacing: '0.1em', textTransform: 'uppercase', mb: 1 }}
+        >
+          Contact
+        </Typography>
+        <Typography variant="h2" sx={{ mb: 1.5 }}>
+          함께 이야기해요
+        </Typography>
+        <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 440 }}>
+          언제든지 연락주세요. 반갑게 답변드리겠습니다.
+        </Typography>
+      </Box>
 
       {/* 연락처 카드 */}
       <Card
@@ -463,6 +468,7 @@ const ContactSection = () => {
           ))}
         </Grid>
       )}
+      </Container>
     </Box>
   );
 };

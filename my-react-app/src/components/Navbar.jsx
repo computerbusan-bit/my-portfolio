@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {
   AppBar,
   Toolbar,
-  Typography,
   Box,
   Button,
   IconButton,
@@ -22,6 +21,70 @@ const NAV_ITEMS = [
   { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ];
+
+// ─── SVG 일러스트 로고 ────────────────────────────────────────────────────────
+
+const KHLogo = () => (
+  <Box
+    component="a"
+    href="#"
+    aria-label="홈으로"
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      textDecoration: 'none',
+      transition: 'transform 0.25s ease',
+      '&:hover': { transform: 'scale(1.07)' },
+    }}
+  >
+    <Box
+      component="svg"
+      width="38"
+      height="38"
+      viewBox="0 0 38 38"
+      sx={{ display: 'block' }}
+    >
+      {/* 바깥 점선 링 */}
+      <circle
+        cx="19" cy="19" r="17.5"
+        fill="none"
+        stroke="#1976d2"
+        strokeWidth="1"
+        strokeDasharray="3 2.5"
+        opacity="0.45"
+      />
+      {/* 사방 포인트 점 */}
+      <circle cx="19" cy="2.5" r="1.5" fill="#1976d2" opacity="0.5" />
+      <circle cx="19" cy="35.5" r="1.5" fill="#1976d2" opacity="0.5" />
+      <circle cx="2.5" cy="19" r="1.5" fill="#1976d2" opacity="0.5" />
+      <circle cx="35.5" cy="19" r="1.5" fill="#1976d2" opacity="0.5" />
+      {/* 안쪽 채운 원 */}
+      <circle cx="19" cy="19" r="13.5" fill="#1976d2" />
+      {/* 안쪽 얇은 링 (레이어감) */}
+      <circle cx="19" cy="19" r="11.5" fill="none" stroke="white" strokeWidth="0.6" opacity="0.2" />
+      {/* K 자형 */}
+      <path
+        d="M11 13L11 25M11 19L18 13M11 19L18 25"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* H 자형 */}
+      <path
+        d="M21 13L21 25M27 13L27 25M21 19L27 19"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+    </Box>
+  </Box>
+);
+
+// ─── 컴포넌트 ─────────────────────────────────────────────────────────────────
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -50,21 +113,7 @@ const Navbar = () => {
         }}
       >
         <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 5 } }}>
-          {/* 로고 */}
-          <Typography
-            component="a"
-            href="#"
-            sx={{
-              fontFamily: '"Plus Jakarta Sans", sans-serif',
-              fontWeight: 800,
-              color: 'primary.main',
-              textDecoration: 'none',
-              fontSize: '1.375rem',
-              letterSpacing: '-0.02em',
-            }}
-          >
-            KH.
-          </Typography>
+          <KHLogo />
 
           {/* 데스크톱 메뉴 */}
           {!isMobile && (

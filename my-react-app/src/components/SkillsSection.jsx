@@ -3,45 +3,29 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import useIntersection from '../hooks/useIntersection';
 
 const MAIN_SKILLS = [
-  {
-    name: 'HTML5',
-    icon: 'https://cdn.simpleicons.org/html5',
-    desc: '시맨틱 마크업과 웹 표준 준수',
-  },
-  {
-    name: 'CSS3',
-    icon: 'https://cdn.simpleicons.org/css3',
-    desc: '반응형 레이아웃, 애니메이션 구현',
-  },
-  {
-    name: 'JavaScript',
-    icon: 'https://cdn.simpleicons.org/javascript',
-    desc: 'ES6+ 문법, 비동기 처리',
-  },
-  {
-    name: 'React',
-    icon: 'https://cdn.simpleicons.org/react',
-    desc: '컴포넌트 설계, 상태 관리',
-  },
-  {
-    name: 'AI-POT',
-    icon: null,
-    desc: 'AI 기반 서비스 개발',
-  },
+  { name: 'HTML5',      icon: 'https://cdn.simpleicons.org/html5',      desc: '시맨틱 마크업과 웹 표준 준수' },
+  { name: 'CSS3',       icon: 'https://cdn.simpleicons.org/css3',       desc: '반응형 레이아웃 & 애니메이션' },
+  { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript', desc: 'ES6+ 문법, 비동기 처리' },
+  { name: 'React',      icon: 'https://cdn.simpleicons.org/react',      desc: '컴포넌트 설계, 상태 관리' },
+  { name: 'AI-POT',     icon: null,                                     desc: 'AI 기반 서비스 개발' },
 ];
 
 const SUB_SKILLS = [
-  { name: 'Git', icon: 'https://cdn.simpleicons.org/git' },
-  { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite' },
+  { name: 'Git',      icon: 'https://cdn.simpleicons.org/git' },
+  { name: 'Vite',     icon: 'https://cdn.simpleicons.org/vite' },
   { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase' },
-  { name: 'MUI', icon: 'https://cdn.simpleicons.org/mui' },
+  { name: 'MUI',      icon: 'https://cdn.simpleicons.org/mui' },
 ];
+
+// ─── 카드 크기 (크게 조정) ────────────────────────────────────────────────────
+const CARD_W = { xs: 156, sm: 186 };
+const CARD_H = { xs: 176, sm: 210 };
 
 const SkillFlipCard = ({ skill, delay }) => (
   <Box
     sx={{
-      width: { xs: 116, sm: 136 },
-      height: { xs: 136, sm: 156 },
+      width: CARD_W,
+      height: CARD_H,
       perspective: '800px',
       flexShrink: 0,
       opacity: 0,
@@ -77,7 +61,7 @@ const SkillFlipCard = ({ skill, delay }) => (
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: 1.5,
+          gap: 2,
           bgcolor: 'background.default',
           borderRadius: 3,
           border: '1px solid',
@@ -94,14 +78,14 @@ const SkillFlipCard = ({ skill, delay }) => (
             component="img"
             src={skill.icon}
             alt={skill.name}
-            sx={{ width: 44, height: 44 }}
+            sx={{ width: 48, height: 48 }}
             onError={(e) => { e.target.style.display = 'none'; }}
           />
         ) : (
           <Box
             sx={{
-              width: 44,
-              height: 44,
+              width: 48,
+              height: 48,
               borderRadius: '50%',
               bgcolor: 'primary.main',
               display: 'flex',
@@ -110,14 +94,14 @@ const SkillFlipCard = ({ skill, delay }) => (
               color: 'white',
             }}
           >
-            <AutoAwesomeIcon fontSize="small" />
+            <AutoAwesomeIcon />
           </Box>
         )}
         <Typography
-          variant="caption"
+          variant="body2"
           fontWeight={700}
           align="center"
-          sx={{ px: 1, lineHeight: 1.3 }}
+          sx={{ px: 1.5, whiteSpace: 'nowrap' }}
         >
           {skill.name}
         </Typography>
@@ -137,13 +121,17 @@ const SkillFlipCard = ({ skill, delay }) => (
           bgcolor: 'primary.main',
           color: 'white',
           borderRadius: 3,
-          p: 2,
+          p: 2.5,
         }}
       >
         <Typography
-          variant="caption"
+          variant="body2"
           align="center"
-          sx={{ lineHeight: 1.6, fontWeight: 500 }}
+          sx={{
+            lineHeight: 1.7,
+            fontWeight: 500,
+            wordBreak: 'keep-all',
+          }}
         >
           {skill.desc}
         </Typography>
@@ -151,6 +139,8 @@ const SkillFlipCard = ({ skill, delay }) => (
     </Box>
   </Box>
 );
+
+// ─── 섹션 컴포넌트 ────────────────────────────────────────────────────────────
 
 const SkillsSection = () => {
   const [ref, isVisible] = useIntersection();
@@ -183,7 +173,11 @@ const SkillsSection = () => {
             <Typography variant="h2" sx={{ mb: 1.5 }}>
               사용하는 기술들
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 440 }}>
+            <Typography
+              variant="body1"
+              color="text.secondary"
+              sx={{ maxWidth: 440, wordBreak: 'keep-all' }}
+            >
               카드에 마우스를 올리면 더 자세한 내용을 확인할 수 있어요.
             </Typography>
           </Box>
@@ -208,7 +202,7 @@ const SkillsSection = () => {
                 }}
               >
                 {MAIN_SKILLS.map((skill, i) => (
-                  <SkillFlipCard key={skill.name} skill={skill} delay={0.05 * i} />
+                  <SkillFlipCard key={skill.name} skill={skill} delay={0.06 * i} />
                 ))}
               </Box>
 
@@ -229,8 +223,8 @@ const SkillsSection = () => {
                       display: 'flex',
                       alignItems: 'center',
                       gap: 1,
-                      px: 2,
-                      py: 1,
+                      px: 2.5,
+                      py: 1.25,
                       border: '1px solid',
                       borderColor: 'divider',
                       borderRadius: 2,
@@ -246,7 +240,7 @@ const SkillsSection = () => {
                       component="img"
                       src={skill.icon}
                       alt={skill.name}
-                      sx={{ width: 18, height: 18 }}
+                      sx={{ width: 20, height: 20 }}
                       onError={(e) => { e.target.style.display = 'none'; }}
                     />
                     <Typography variant="body2" fontWeight={600}>

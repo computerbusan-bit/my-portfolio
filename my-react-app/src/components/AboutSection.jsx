@@ -32,21 +32,9 @@ const ABOUT_DATA = {
     photo: '',
   },
   sections: [
-    {
-      id: 'dev-story',
-      title: '나의 개발 스토리',
-      showInHome: true,
-    },
-    {
-      id: 'philosophy',
-      title: '개발 철학',
-      showInHome: true,
-    },
-    {
-      id: 'personal',
-      title: '개인적인 이야기',
-      showInHome: false,
-    },
+    { id: 'dev-story', title: '나의 개발 스토리', showInHome: true },
+    { id: 'philosophy', title: '개발 철학', showInHome: true },
+    { id: 'personal', title: '개인적인 이야기', showInHome: false },
   ],
 };
 
@@ -134,7 +122,12 @@ const AboutSection = () => {
               mb: 5,
             }}
           >
-            <CardContent sx={{ p: { xs: 3, sm: 4, md: 5 }, '&:last-child': { pb: { xs: 3, sm: 4, md: 5 } } }}>
+            <CardContent
+              sx={{
+                p: { xs: 3, sm: 4, md: 5 },
+                '&:last-child': { pb: { xs: 3, sm: 4, md: 5 } },
+              }}
+            >
               <Box
                 sx={{
                   display: 'flex',
@@ -185,7 +178,7 @@ const AboutSection = () => {
                     {INFO_ROWS.map(({ Icon, label, value }) => (
                       <Box
                         key={label}
-                        sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}
+                        sx={{ display: 'flex', alignItems: 'flex-start', gap: 1.5 }}
                       >
                         <Box
                           sx={{
@@ -193,6 +186,7 @@ const AboutSection = () => {
                             display: 'flex',
                             alignItems: 'center',
                             flexShrink: 0,
+                            mt: '2px',
                           }}
                         >
                           <Icon sx={{ fontSize: 18 }} />
@@ -204,7 +198,11 @@ const AboutSection = () => {
                         >
                           {label}
                         </Typography>
-                        <Typography variant="body2" color="text.primary">
+                        <Typography
+                          variant="body2"
+                          color="text.primary"
+                          sx={{ wordBreak: 'keep-all' }}
+                        >
                           {value}
                         </Typography>
                       </Box>
@@ -256,13 +254,17 @@ const AboutSection = () => {
                   <Typography
                     variant="body1"
                     color="text.secondary"
-                    sx={{ mb: 3, fontSize: '1.05rem' }}
+                    sx={{ mb: 3, fontSize: '1.05rem', wordBreak: 'keep-all' }}
                   >
                     호기심이 많고 배우는 것을 좋아합니다.
                     새로운 기술을 접하면 직접 만들어보며 이해하고,
                     목표가 생기면 어떻게든 해내려는 사람입니다.
                   </Typography>
-                  <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1.05rem' }}>
+                  <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ fontSize: '1.05rem', wordBreak: 'keep-all' }}
+                  >
                     개발하다 막히는 순간이 오면 잠깐 자리를 떠납니다.
                     산책을 하거나 운동을 하고 나서 다시 코드를 보면
                     신기하게도 해결 방법이 보이더라고요.
@@ -278,21 +280,15 @@ const AboutSection = () => {
                     borderRadius: 3,
                     borderLeft: '4px solid',
                     borderColor: 'primary.main',
-                    position: 'relative',
                   }}
                 >
                   <FormatQuoteIcon
-                    sx={{
-                      color: 'primary.light',
-                      fontSize: 36,
-                      mb: 1,
-                      opacity: 0.6,
-                    }}
+                    sx={{ color: 'primary.light', fontSize: 36, mb: 1, opacity: 0.6 }}
                   />
                   <Typography
                     variant="h3"
                     color="primary.dark"
-                    sx={{ lineHeight: 1.6, fontStyle: 'italic' }}
+                    sx={{ lineHeight: 1.6, fontStyle: 'italic', wordBreak: 'keep-all' }}
                   >
                     막히면 일단 움직입니다.
                     <br />
@@ -305,7 +301,7 @@ const AboutSection = () => {
             {/* 탭 1: 개발 철학 */}
             <TabPanel value={tabValue} index={1}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {TRAITS.map((trait) => (
+                {TRAITS.map((trait, idx) => (
                   <Card
                     key={trait.title}
                     elevation={0}
@@ -313,7 +309,8 @@ const AboutSection = () => {
                       border: '1px solid',
                       borderColor: 'divider',
                       bgcolor: trait.bg,
-                      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                      transition: `transform 0.2s ease, box-shadow 0.2s ease, opacity 0.45s ease ${0.1 + idx * 0.12}s`,
+                      opacity: isVisible ? 1 : 0,
                       '&:hover': {
                         transform: 'translateX(6px)',
                         boxShadow: 2,
@@ -336,7 +333,11 @@ const AboutSection = () => {
                         <Typography variant="h4" sx={{ mb: 0.5 }}>
                           {trait.title}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ wordBreak: 'keep-all' }}
+                        >
                           {trait.desc}
                         </Typography>
                       </Box>

@@ -2,19 +2,21 @@ import { Box, Container, Typography } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import useIntersection from '../hooks/useIntersection';
 
+const DEV = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
+
 const MAIN_SKILLS = [
-  { name: 'HTML5',      icon: 'https://cdn.simpleicons.org/html5',      desc: '시맨틱 마크업과 웹 표준 준수' },
-  { name: 'CSS3',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', desc: '반응형 레이아웃 & 애니메이션' },
-  { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript', desc: 'ES6+ 문법, 비동기 처리' },
-  { name: 'React',      icon: 'https://cdn.simpleicons.org/react',      desc: '컴포넌트 설계, 상태 관리' },
-  { name: 'AI-POT',     icon: null,                                     desc: 'AI 기반 서비스 개발' },
+  { name: 'HTML5',      icon: `${DEV}/html5/html5-original.svg`,             desc: '시맨틱 마크업과 웹 표준 준수' },
+  { name: 'CSS3',       icon: `${DEV}/css3/css3-original.svg`,               desc: '반응형 레이아웃 & 애니메이션' },
+  { name: 'JavaScript', icon: `${DEV}/javascript/javascript-original.svg`,   desc: 'ES6+ 문법, 비동기 처리' },
+  { name: 'React',      icon: `${DEV}/react/react-original.svg`,             desc: '컴포넌트 설계, 상태 관리' },
+  { name: 'AI-POT',     icon: null,                                          desc: 'AI 기반 서비스 개발' },
 ];
 
 const SUB_SKILLS = [
-  { name: 'Git',      icon: 'https://cdn.simpleicons.org/git' },
-  { name: 'Vite',     icon: 'https://cdn.simpleicons.org/vite' },
-  { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase' },
-  { name: 'MUI',      icon: 'https://cdn.simpleicons.org/mui' },
+  { name: 'Git',      icon: `${DEV}/git/git-original.svg` },
+  { name: 'Vite',     icon: `${DEV}/vite/vite-original.svg` },
+  { name: 'Supabase', icon: `${DEV}/supabase/supabase-original.svg` },
+  { name: 'MUI',      icon: `${DEV}/materialui/materialui-original.svg` },
 ];
 
 // ─── 카드 크기 (크게 조정) ────────────────────────────────────────────────────

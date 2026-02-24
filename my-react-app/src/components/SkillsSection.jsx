@@ -4,7 +4,7 @@ import useIntersection from '../hooks/useIntersection';
 
 const MAIN_SKILLS = [
   { name: 'HTML5',      icon: 'https://cdn.simpleicons.org/html5',      desc: '시맨틱 마크업과 웹 표준 준수' },
-  { name: 'CSS3',       icon: 'https://cdn.simpleicons.org/css3',       desc: '반응형 레이아웃 & 애니메이션' },
+  { name: 'CSS3',       icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', desc: '반응형 레이아웃 & 애니메이션' },
   { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript', desc: 'ES6+ 문법, 비동기 처리' },
   { name: 'React',      icon: 'https://cdn.simpleicons.org/react',      desc: '컴포넌트 설계, 상태 관리' },
   { name: 'AI-POT',     icon: null,                                     desc: 'AI 기반 서비스 개발' },

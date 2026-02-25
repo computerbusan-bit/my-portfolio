@@ -19,53 +19,13 @@ import TrackChangesIcon from '@mui/icons-material/TrackChanges';
 import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import useIntersection from '../hooks/useIntersection';
+import { usePortfolio } from '../context/PortfolioContext';
 
-// ─── 데이터 ─────────────────────────────────────────────────────────────────
-
-const ABOUT_DATA = {
-  basicInfo: {
-    name: '김하미',
-    role: '프론트엔드 개발자',
-    education: 'Northumbria University / Multidisciplinary Innovation MA',
-    major: '산업디자인 · Multidisciplinary Innovation',
-    experience: '신입 · 1년차',
-    photo: '',
-  },
-  sections: [
-    { id: 'dev-story', title: '나의 개발 스토리', showInHome: true },
-    { id: 'philosophy', title: '개발 철학', showInHome: true },
-    { id: 'personal', title: '개인적인 이야기', showInHome: false },
-  ],
-};
-
-const TRAITS = [
-  {
-    icon: <ExploreIcon sx={{ fontSize: 28 }} />,
-    title: '호기심 탐구',
-    desc: '새로운 기술을 마주치면 왜, 어떻게 동작하는지 끝까지 파고듭니다.',
-    color: 'primary.main',
-    bg: 'rgba(25, 118, 210, 0.05)',
-  },
-  {
-    icon: <TrackChangesIcon sx={{ fontSize: 28 }} />,
-    title: '목표 완수',
-    desc: '목표를 세우면 반드시 이루려고 노력합니다. 포기보다는 방법을 찾습니다.',
-    color: 'secondary.main',
-    bg: 'rgba(220, 0, 78, 0.05)',
-  },
-  {
-    icon: <DirectionsRunIcon sx={{ fontSize: 28 }} />,
-    title: '움직이면 해결',
-    desc: '막히면 일단 일어납니다. 몸을 쓰고 돌아오면 의외로 답이 보이더라고요.',
-    color: '#ed6c02',
-    bg: 'rgba(237, 108, 2, 0.05)',
-  },
-];
-
-const INFO_ROWS = [
-  { Icon: SchoolIcon, label: '학력', value: ABOUT_DATA.basicInfo.education },
-  { Icon: MenuBookIcon, label: '전공', value: ABOUT_DATA.basicInfo.major },
-  { Icon: WorkIcon, label: '경력', value: ABOUT_DATA.basicInfo.experience },
+// 트레이트 아이콘/색상 (인덱스 순서 고정)
+const TRAIT_META = [
+  { icon: <ExploreIcon sx={{ fontSize: 28 }} />,       color: 'primary.main',    bg: 'rgba(25, 118, 210, 0.05)' },
+  { icon: <TrackChangesIcon sx={{ fontSize: 28 }} />,  color: 'secondary.main',  bg: 'rgba(220, 0, 78, 0.05)' },
+  { icon: <DirectionsRunIcon sx={{ fontSize: 28 }} />, color: '#ed6c02',          bg: 'rgba(237, 108, 2, 0.05)' },
 ];
 
 // ─── 탭 패널 ─────────────────────────────────────────────────────────────────
@@ -81,8 +41,17 @@ const TabPanel = ({ value, index, children }) => (
 const AboutSection = () => {
   const [ref, isVisible] = useIntersection();
   const [tabValue, setTabValue] = useState(0);
+  const { aboutMeData } = usePortfolio();
+  const { basicInfo, sections, traits } = aboutMeData;
 
-  const homeSections = ABOUT_DATA.sections.filter((s) => s.showInHome);
+  const homeSections = sections.filter((s) => s.showInHome);
+  const devStory = sections.find((s) => s.id === 'dev-story');
+
+  const INFO_ROWS = [
+    { Icon: SchoolIcon,   label: '학력', value: basicInfo.education },
+    { Icon: MenuBookIcon, label: '전공', value: basicInfo.major },
+    { Icon: WorkIcon,     label: '경력', value: basicInfo.experience },
+  ];
 
   return (
     <Box
@@ -138,7 +107,7 @@ const AboutSection = () => {
               >
                 {/* 사진 */}
                 <Avatar
-                  src={ABOUT_DATA.basicInfo.photo || undefined}
+                  src={basicInfo.photo || undefined}
                   sx={{
                     width: { xs: 80, md: 112 },
                     height: { xs: 80, md: 112 },
@@ -163,9 +132,9 @@ const AboutSection = () => {
                       flexWrap: 'wrap',
                     }}
                   >
-                    <Typography variant="h3">{ABOUT_DATA.basicInfo.name}</Typography>
+                    <Typography variant="h3">{basicInfo.name}</Typography>
                     <Chip
-                      label={ABOUT_DATA.basicInfo.role}
+                      label={basicInfo.role}
                       color="primary"
                       size="small"
                       sx={{ fontWeight: 600 }}
@@ -251,25 +220,16 @@ const AboutSection = () => {
                 }}
               >
                 <Box>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    sx={{ mb: 3, fontSize: '1.05rem', wordBreak: 'keep-all' }}
-                  >
-                    호기심이 많고 배우는 것을 좋아합니다.
-                    새로운 기술을 접하면 직접 만들어보며 이해하고,
-                    목표가 생기면 어떻게든 해내려는 사람입니다.
-                  </Typography>
-                  <Typography
-                    variant="body1"
-                    color="text.secondary"
-                    sx={{ fontSize: '1.05rem', wordBreak: 'keep-all' }}
-                  >
-                    개발하다 막히는 순간이 오면 잠깐 자리를 떠납니다.
-                    산책을 하거나 운동을 하고 나서 다시 코드를 보면
-                    신기하게도 해결 방법이 보이더라고요.
-                    그렇게 저는 오늘도 해냅니다.
-                  </Typography>
+                  {devStory?.content.split('\n\n').map((para, i) => (
+                    <Typography
+                      key={i}
+                      variant="body1"
+                      color="text.secondary"
+                      sx={{ mb: i === 0 ? 3 : 0, fontSize: '1.05rem', wordBreak: 'keep-all' }}
+                    >
+                      {para}
+                    </Typography>
+                  ))}
                 </Box>
 
                 {/* 슬로건 인용 박스 */}
@@ -288,11 +248,9 @@ const AboutSection = () => {
                   <Typography
                     variant="h3"
                     color="primary.dark"
-                    sx={{ lineHeight: 1.6, fontStyle: 'italic', wordBreak: 'keep-all' }}
+                    sx={{ lineHeight: 1.6, fontStyle: 'italic', wordBreak: 'keep-all', whiteSpace: 'pre-line' }}
                   >
-                    막히면 일단 움직입니다.
-                    <br />
-                    그리고 다시, 해냅니다.
+                    {basicInfo.slogan}
                   </Typography>
                 </Box>
               </Box>
@@ -301,49 +259,52 @@ const AboutSection = () => {
             {/* 탭 1: 개발 철학 */}
             <TabPanel value={tabValue} index={1}>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {TRAITS.map((trait, idx) => (
-                  <Card
-                    key={trait.title}
-                    elevation={0}
-                    sx={{
-                      border: '1px solid',
-                      borderColor: 'divider',
-                      bgcolor: trait.bg,
-                      transition: `transform 0.2s ease, box-shadow 0.2s ease, opacity 0.45s ease ${0.1 + idx * 0.12}s`,
-                      opacity: isVisible ? 1 : 0,
-                      '&:hover': {
-                        transform: 'translateX(6px)',
-                        boxShadow: 2,
-                      },
-                    }}
-                  >
-                    <CardContent
+                {traits.map((trait, idx) => {
+                  const meta = TRAIT_META[idx] ?? TRAIT_META[0];
+                  return (
+                    <Card
+                      key={trait.title}
+                      elevation={0}
                       sx={{
-                        display: 'flex',
-                        alignItems: 'flex-start',
-                        gap: 2,
-                        p: 2.5,
-                        '&:last-child': { pb: 2.5 },
+                        border: '1px solid',
+                        borderColor: 'divider',
+                        bgcolor: meta.bg,
+                        transition: `transform 0.2s ease, box-shadow 0.2s ease, opacity 0.45s ease ${0.1 + idx * 0.12}s`,
+                        opacity: isVisible ? 1 : 0,
+                        '&:hover': {
+                          transform: 'translateX(6px)',
+                          boxShadow: 2,
+                        },
                       }}
                     >
-                      <Box sx={{ color: trait.color, mt: 0.25, flexShrink: 0 }}>
-                        {trait.icon}
-                      </Box>
-                      <Box>
-                        <Typography variant="h4" sx={{ mb: 0.5 }}>
-                          {trait.title}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="text.secondary"
-                          sx={{ wordBreak: 'keep-all' }}
-                        >
-                          {trait.desc}
-                        </Typography>
-                      </Box>
-                    </CardContent>
-                  </Card>
-                ))}
+                      <CardContent
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 2,
+                          p: 2.5,
+                          '&:last-child': { pb: 2.5 },
+                        }}
+                      >
+                        <Box sx={{ color: meta.color, mt: 0.25, flexShrink: 0 }}>
+                          {meta.icon}
+                        </Box>
+                        <Box>
+                          <Typography variant="h4" sx={{ mb: 0.5 }}>
+                            {trait.title}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ wordBreak: 'keep-all' }}
+                          >
+                            {trait.desc}
+                          </Typography>
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </Box>
             </TabPanel>
           </Box>

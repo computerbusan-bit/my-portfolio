@@ -4,13 +4,16 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import theme from './theme'
 import App from './App.jsx'
+import { PortfolioProvider } from './context/PortfolioContext'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <PortfolioProvider>
+        <App />
+      </PortfolioProvider>
     </ThemeProvider>
   </React.StrictMode>,
 )

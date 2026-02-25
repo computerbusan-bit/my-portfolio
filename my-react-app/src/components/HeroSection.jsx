@@ -1,6 +1,10 @@
 import { Box, Typography, Button, Container } from '@mui/material';
+import { usePortfolio } from '../context/PortfolioContext';
 
 const HeroSection = () => {
+  const { aboutMeData } = usePortfolio();
+  const { name, role, slogan } = aboutMeData.basicInfo;
+
   return (
     <Box
       component="section"
@@ -85,7 +89,7 @@ const HeroSection = () => {
             variant="h1"
             sx={{ animationDelay: '0.25s', mb: 1, fontSize: { xs: '3rem', sm: '4rem', md: '5rem' } }}
           >
-            김하미
+            {name}
           </Typography>
 
           <Typography
@@ -94,18 +98,16 @@ const HeroSection = () => {
             color="text.secondary"
             sx={{ animationDelay: '0.4s', mb: 3, fontWeight: 500, fontSize: { xs: '1.25rem', md: '1.625rem' } }}
           >
-            프론트엔드 개발자
+            {role}
           </Typography>
 
           <Typography
             className="hero-item"
             variant="body1"
             color="text.secondary"
-            sx={{ animationDelay: '0.55s', mb: 5, fontSize: { xs: '1rem', md: '1.1rem' }, lineHeight: 1.85, maxWidth: 480, wordBreak: 'keep-all' }}
+            sx={{ animationDelay: '0.55s', mb: 5, fontSize: { xs: '1rem', md: '1.1rem' }, lineHeight: 1.85, maxWidth: 480, wordBreak: 'keep-all', whiteSpace: 'pre-line' }}
           >
-            막히면 일단 움직입니다.
-            <br />
-            그리고 다시, 해냅니다.
+            {slogan}
           </Typography>
 
           <Box

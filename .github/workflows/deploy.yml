@@ -52,14 +52,13 @@ jobs:
 
       - name: Combine dist folders
         run: |
-          mkdir -p dist/my-portfolio
-          cp -r my-react-app/dist/* dist/my-portfolio/
+          mkdir -p dist
+          cp -r my-react-app/dist/* dist/
           mkdir -p dist/mini_sns
           cp -r mini_sns/dist/* dist/mini_sns/
           mkdir -p dist/my-community
           cp -r my-community/dist/* dist/my-community/
           cp dist/my-community/index.html dist/my-community/404.html
-          node -e "require('fs').writeFileSync('dist/index.html', '<html><head><meta http-equiv=\"refresh\" content=\"0; url=/my-first-website/my-portfolio/\"></head><body><p><a href=\"/my-first-website/my-portfolio/\">Portfolio</a></p></body></html>')"
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

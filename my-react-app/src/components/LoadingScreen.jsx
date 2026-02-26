@@ -117,31 +117,7 @@ const LoadingScreen = ({ onComplete }) => {
           />
         </Box>
 
-        {/* KH 로고 — 링 중앙 고정 */}
-        <Box
-          component="svg"
-          width="64"
-          height="64"
-          viewBox="0 0 38 38"
-          aria-hidden="true"
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            display: 'block',
-          }}
-        >
-          <circle cx="19" cy="19" r="17.5" fill="none" stroke="#1976d2" strokeWidth="1" strokeDasharray="3 2.5" opacity="0.45" />
-          <circle cx="19" cy="2.5"  r="1.5" fill="#1976d2" opacity="0.5" />
-          <circle cx="19" cy="35.5" r="1.5" fill="#1976d2" opacity="0.5" />
-          <circle cx="2.5"  cy="19" r="1.5" fill="#1976d2" opacity="0.5" />
-          <circle cx="35.5" cy="19" r="1.5" fill="#1976d2" opacity="0.5" />
-          <circle cx="19" cy="19" r="13.5" fill="#1976d2" />
-          <circle cx="19" cy="19" r="11.5" fill="none" stroke="white" strokeWidth="0.6" opacity="0.2" />
-          <path d="M11 13L11 25M11 19L18 13M11 19L18 25" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          <path d="M21 13L21 25M27 13L27 25M21 19L27 19"  stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        </Box>
+
       </Box>
 
       {/* ── ② 이름 (그라데이션) ───────────────────────────────────────────────── */}

@@ -1,19 +1,24 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useMemo, useCallback } from 'react';
 
 const PortfolioContext = createContext();
 
 const DEV = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
 
 export const PortfolioProvider = ({ children }) => {
-  const [aboutMeData, setAboutMeData] = useState({
+  const [aboutMeData, setAboutMeDataRaw] = useState({
     basicInfo: {
       name: '김하미',
       role: '프론트엔드 개발자',
-      slogan: '막히면 일단 움직입니다.\n그리고 다시, 해냅니다.',
+      headline: '사용자가 헤매지 않는\n인터페이스를 만듭니다',
+      slogan: '디자인의 눈으로 문제를 발견하고, 코드로 해결합니다.\nFigma로 그리고 React로 구현하는, 처음부터 끝까지.',
       education: 'Northumbria University / Multidisciplinary Innovation MA',
       major: '산업디자인 · Multidisciplinary Innovation',
       experience: '신입 · 1년차',
       photo: '',
+      links: {
+        github: 'https://github.com/computerbusan-bit',
+        email: 'mailto:computer.busan@gmail.com',
+      },
     },
     sections: [
       {
@@ -68,8 +73,13 @@ export const PortfolioProvider = ({ children }) => {
     },
   });
 
-  // 홈 탭용 데이터 자동 생성
-  const getHomeData = () => {
+  // useCallback으로 안정적인 setter 참조 유지
+  const setAboutMeData = useCallback((updater) => {
+    setAboutMeDataRaw(updater);
+  }, []);
+
+  // useMemo로 홈 탭용 데이터 캐싱 — aboutMeData가 바뀔 때만 재계산
+  const homeData = useMemo(() => {
     const homeContent = aboutMeData.sections
       .filter((s) => s.showInHome)
       .map((s) => ({
@@ -86,10 +96,13 @@ export const PortfolioProvider = ({ children }) => {
       skills: topSkills,
       basicInfo: aboutMeData.basicInfo,
     };
-  };
+  }, [aboutMeData]);
+
+  // 하위 호환: 함수 형태로도 제공 (이전 호출자 대비)
+  const getHomeData = useCallback(() => homeData, [homeData]);
 
   return (
-    <PortfolioContext.Provider value={{ aboutMeData, setAboutMeData, getHomeData }}>
+    <PortfolioContext.Provider value={{ aboutMeData, setAboutMeData, homeData, getHomeData }}>
       {children}
     </PortfolioContext.Provider>
   );

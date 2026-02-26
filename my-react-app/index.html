@@ -4,6 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      깜빡임 방지 스크립트 (FOUC prevention)
+      React 번들 실행 전에 동기적으로 data-theme 설정 → body 배경색 즉시 적용.
+      localStorage → prefers-color-scheme → light 순으로 우선순위.
+    -->
+    <script>
+      (function () {
+        var k = 'portfolio-color-mode';
+        var s = localStorage.getItem(k);
+        var m =
+          s === 'dark' || s === 'light'
+            ? s
+            : window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'dark'
+            : 'light';
+        document.documentElement.setAttribute('data-theme', m);
+        document.documentElement.style.colorScheme = m;
+        // CSS 변수 즉시 설정 → body 배경색 전환 없이 올바른 색상으로 시작
+        document.documentElement.style.setProperty(
+          '--color-bg',
+          m === 'dark' ? '#0f1117' : '#ffffff',
+        );
+      })();
+    </script>
     <meta name="description" content="프론트엔드 개발자 김하미의 포트폴리오입니다." />
     <meta name="author" content="김하미" />
     <title>김하미 | 프론트엔드 개발자</title>

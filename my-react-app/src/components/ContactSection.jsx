@@ -21,6 +21,7 @@ import {
   FormControl,
   Collapse,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import EmailIcon from '@mui/icons-material/Email';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import SendIcon from '@mui/icons-material/Send';
@@ -50,7 +51,7 @@ const SNS_LINKS = [
     icon: <GitHubIcon />,
     label: 'GitHub',
     keyword: '코드 구경',
-    href: 'https://github.com/computerbusan-bit/my-first-website',
+    href: 'https://github.com/computerbusan-bit/my-portfolio',
     color: '#181717',
   },
 ];
@@ -67,6 +68,9 @@ const INITIAL_FORM = {
 };
 
 const ContactSection = () => {
+  const theme  = useTheme();
+  const isDark = theme.palette.mode === 'dark';
+
   const [entries, setEntries] = useState([]);
   const [form, setForm] = useState(INITIAL_FORM);
   const [showOptional, setShowOptional] = useState(false);
@@ -74,7 +78,9 @@ const ContactSection = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
-  const [headerRef, headerVisible] = useIntersection();
+  const [headerRef,  headerVisible]  = useIntersection();
+  const [cardsRef,   cardsVisible]   = useIntersection(0.1);
+  const [entriesRef, entriesVisible] = useIntersection(0.05);
 
   const fetchEntries = async () => {
     setLoading(true);
@@ -180,7 +186,10 @@ const ContactSection = () => {
         sx={{
           mb: 6,
           borderRadius: 3,
-          background: 'linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%)',
+          background: isDark
+            ? 'linear-gradient(135deg, #141827 0%, #1a1d2e 100%)'
+            : 'linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%)',
+          transition: 'background 0.4s ease',
         }}
       >
         <CardContent sx={{ p: 4 }}>
@@ -188,8 +197,9 @@ const ContactSection = () => {
             📬 연락 방법
           </Typography>
 
+          <Box ref={cardsRef}>
           <Grid container spacing={2}>
-            {SNS_LINKS.map(({ icon, label, keyword, href, color }) => (
+            {SNS_LINKS.map(({ icon, label, keyword, href, color }, i) => (
               <Grid size={{ xs: 12, sm: 6, md: 3 }} key={label}>
                 <Tooltip title={label} arrow>
                   <Card
@@ -208,19 +218,34 @@ const ContactSection = () => {
                       borderRadius: 2,
                       textDecoration: 'none',
                       color: 'text.primary',
-                      transition: 'all 0.2s ease',
+                      willChange: 'transform',
+                      opacity: cardsVisible ? undefined : 0,
+                      animation: cardsVisible
+                        ? `contactIn 0.5s cubic-bezier(0.22,1,0.36,1) ${(i * 0.1).toFixed(1)}s both`
+                        : 'none',
+                      '@keyframes contactIn': {
+                        from: { opacity: 0, transform: 'translate3d(0, 28px, 0)' },
+                        to:   { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+                      },
+                      transition: 'all 0.3s ease',
                       '&:hover': {
                         borderColor: color,
-                        boxShadow: `0 0 0 2px ${color}22`,
-                        transform: 'translateY(-2px)',
+                        boxShadow: `0 0 0 2px ${color}33, 0 12px 28px ${color}28`,
+                        transform: 'translateY(-6px) perspective(600px) rotateX(-4deg)',
+                        '& .contact-icon-btn': {
+                          transform: 'scale(1.2) rotate(-8deg)',
+                          boxShadow: `0 4px 12px ${color}44`,
+                        },
                       },
                     }}
                   >
                     <IconButton
                       size="small"
+                      className="contact-icon-btn"
                       sx={{
                         bgcolor: `${color}18`,
                         color,
+                        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                         '&:hover': { bgcolor: `${color}18` },
                       }}
                     >
@@ -239,6 +264,7 @@ const ContactSection = () => {
               </Grid>
             ))}
           </Grid>
+          </Box>
         </CardContent>
       </Card>
 
@@ -421,10 +447,33 @@ const ContactSection = () => {
           <Typography variant="body2">아직 방명록이 없어요. 첫 번째로 남겨보세요! 🌟</Typography>
         </Box>
       ) : (
+        <Box ref={entriesRef}>
         <Grid container spacing={2}>
-          {entries.map((entry) => (
+          {entries.map((entry, ei) => (
             <Grid size={{ xs: 12, sm: 6, md: 4 }} key={entry.id}>
-              <Card elevation={1} sx={{ borderRadius: 2, height: '100%' }}>
+              <Card
+                elevation={1}
+                sx={{
+                  borderRadius: 2,
+                  height: '100%',
+                  borderLeft: '3px solid transparent',
+                  willChange: 'transform',
+                  opacity: entriesVisible ? undefined : 0,
+                  animation: entriesVisible
+                    ? `guestIn 0.5s cubic-bezier(0.22,1,0.36,1) ${(ei * 0.06).toFixed(2)}s both`
+                    : 'none',
+                  '@keyframes guestIn': {
+                    from: { opacity: 0, transform: 'translate3d(0, 24px, 0)' },
+                    to:   { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+                  },
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease',
+                  '&:hover': {
+                    transform: 'translateY(-6px)',
+                    boxShadow: '0 16px 40px rgba(0,0,0,0.1)',
+                    borderLeftColor: 'primary.main',
+                  },
+                }}
+              >
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
                     <Avatar sx={{ bgcolor: 'primary.light', width: 36, height: 36, fontSize: '1rem' }}>
@@ -467,6 +516,7 @@ const ContactSection = () => {
             </Grid>
           ))}
         </Grid>
+        </Box>
       )}
       </Container>
     </Box>

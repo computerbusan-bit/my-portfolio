@@ -21,7 +21,7 @@ const Footer = () => (
         }}
       >
         <Typography variant="body2" color="text.secondary">
-          ©2025 김하미. All Rights Reserved.
+          ©2026 김하미. All Rights Reserved.
         </Typography>
 
         <Box sx={{ display: 'flex', gap: 3 }}>
@@ -35,7 +35,7 @@ const Footer = () => (
             이메일
           </Link>
           <Link
-            href="https://github.com/computerbusan-bit/my-first-website"
+            href="https://github.com/computerbusan-bit/my-portfolio"
             target="_blank"
             rel="noopener noreferrer"
             variant="body2"
